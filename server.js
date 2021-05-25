@@ -1,7 +1,10 @@
 const express = require('express');
 const BodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
 const app = express();
+const cors = require('cors');
 app.use(BodyParser.json());
+app.use(cors());
 // app.use(BodyParser.urlencoded());
 // app.use(express.json());
 // app.use(
@@ -28,6 +31,13 @@ const database = {
 			joined: new Date(),
 		},
 	],
+	login: [
+		{
+			id: '987',
+			hash: '',
+			email: 'john@gmail.com',
+		},
+	],
 };
 app.get('/', (req, res) => {
 	res.json(database.users);
@@ -35,7 +45,8 @@ app.get('/', (req, res) => {
 app.post('/signin', (req, res) => {
 	if (
 		req.body.email === database.users[0].email &&
-		req.body.password === database.users[0].password
+		req.body.password ===
+			database.users[0].password
 	) {
 		res.json('success');
 	} else {
@@ -45,6 +56,14 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
 	const { email, name, password } = req.body;
+	// bcrypt.hash(
+	// 	password,
+	// 	null,
+	// 	null,
+	// 	function (err, hash) {
+	// 		console.log(hash);
+	// 	}
+	// );
 	database.users.push({
 		id: 125,
 		name: name,
@@ -86,6 +105,6 @@ app.post('/image', (req, res) => {
 	}
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
 	console.log('App is running');
 });
