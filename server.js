@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const cors = require('cors');
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 const database = {
 	users: [
@@ -82,6 +83,6 @@ app.post('/image', (req, res) => {
 	}
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
 	console.log('App is running');
 });
